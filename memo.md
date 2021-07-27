@@ -171,4 +171,25 @@ vector<string> split(const string &s, char delim) {
 
 
 # ダイクストラ
-abc191 e
+vector<vector<int> > e(n);  // エッジ
+vector<int> d(n, MAX);  // 距離
+
+// この後ろの二つのvectorとgreaterはおまじない。これによって昇順になる
+priority_queue<pair<int, int>, vector<P>, greater<P> > q;
+
+q.emplace(0, 0);
+d[0] = 0;
+cnt[0] = 1;
+while (!q.empty()) {
+    auto vd = q.top();
+    int v = vd.second;
+    int di = vd.first;
+    q.pop();
+    if (d[v] != di) continue;
+    for (auto vi : e[v]) {
+        if (d[vi] > d[v] + 1) {
+            d[vi] = d[v] + 1;
+            q.emplace(d[vi], vi);
+        }
+    }
+}
